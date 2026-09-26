@@ -216,3 +216,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Ignore Raw Datasets (Keep Cleaned Data Tracked)
+dataset/tv_shows_raw.csv
