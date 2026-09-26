@@ -10,7 +10,7 @@
 | :--- | :--- |
 | **Project Name** | TV Program Success Predictor |
 | **Target Completion** | Academic Submission Cycle 2026 |
-| **Current Status** | Initialization & Architecture Setup Phase |
+| **Current Status** | Phase 1–3 Completed (Phase 4 Deployment Active) |
 | **Core Objective** | Develop a dual-stage ML system predicting television program success using pre-production metadata on open IMDb data. |
 
 ---
@@ -83,9 +83,10 @@ $$
 
 - [x] Initialized project repository structure.
 - [x] Drafted core requirements documents (PRD, Architecture, Design, Memory, Rules, Phases).
-- [ ] **In Progress:** Member 1 executing dataset cleaning and EDA.
-- [ ] **Pending:** Member 2 regression model training.
-- [ ] **Pending:** Member 3 classification model training & Streamlit UI construction.
+- [x] **Phase 1 Complete:** Member 1 executed dataset cleaning, rating categorization, and EDA notebook.
+- [x] **Phase 2 Complete:** Member 2 implemented regression pipeline (`Linear Regression` RMSE: 0.9216).
+- [x] **Phase 3 Complete:** Member 2 implemented classification pipeline (`Gradient Boosting` Weighted F1: 0.3956).
+- [ ] **Phase 4 Active:** Member 3 deploying Streamlit UI integration (`app/main.py`).
 
 ---
 
@@ -124,24 +125,26 @@ $$
 | :--- | :--- |
 | Raw Dataset | `dataset/tv_shows_raw.csv` |
 | Processed Data | `dataset/cleaned_tv_shows.csv` |
-| Trained Models | `models/best_regressor.pkl`, `models/best_classifier.pkl` |
-| Preprocessing Transformers | `models/encoder_scaler.pkl` |
-| Metrics | `results/regression_metrics.csv`, `results/classification_metrics.csv` |
-| Application Entrypoint | `app/app.py` |
+| Trained Models | `models/regression_model.pkl`, `models/classification_model.pkl` |
+| Preprocessing Transformers | Integrated directly into Scikit-Learn Pipelines |
+| Application Entrypoint | `app/main.py` |
 
 ---
 
 ## 10. Empirical Verification & Performance Metrics
 
-> *To be populated after the model training phase completes.*
-
-| Model | Task | MAE | RMSE | $R^2$ | Accuracy | F1 |
+> | Model | Task | MAE | RMSE | $R^2$ | Accuracy | Weighted F1 |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: |
-| — | — | — | — | — | — | — |
+| **Linear Regression** | Regression | **0.7097** | **0.9216** | **0.0804** | — | — |
+| Random Forest | Regression | 0.8396 | 1.1025 | -0.3161 | — | — |
+| Gradient Boosting | Regression | 0.7133 | 0.9226 | 0.0784 | — | — |
+| Logistic Regression | Classification | — | — | — | 45.67% | 0.3692 |
+| Random Forest | Classification | — | — | — | 38.17% | 0.3784 |
+| **Gradient Boosting** | Classification | — | — | — | **45.67%** | **0.3956** |
 
 ---
 
 ## 11. Immediate Next Steps
 
-1. Download the Kaggle IMDb Top 5000 TV Shows CSV into `dataset/tv_shows_raw.csv`.
-2. Execute `notebooks/01_data_cleaning_eda.ipynb` to clean raw features.
+1. Hand over `.pkl` trained model artifacts to Member 3 for Streamlit UI construction (`app/main.py`).
+2. Verify dual-model inference and page layout in Phase 4.

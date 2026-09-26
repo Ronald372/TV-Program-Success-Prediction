@@ -1,7 +1,7 @@
 # System Architecture Document
 
 **Project:** TV Program Success Predictor
-**Document Version:** 1.0
+**Document Version:** 1.1 (Phases 1–3 Implemented)
 
 ---
 
@@ -57,10 +57,10 @@ Raw Kaggle CSV ---> Data Preprocessing ---> Feature Matrix (X, y)
 
 | Component | File Path | Responsibilities | Input Artifacts | Output Artifacts |
 | :--- | :--- | :--- | :--- | :--- |
-| **Data Cleaner** | `src/preprocessing.py` | Imputation, scaling, categorical encoding, and feature filtering. | `dataset/tv_shows_raw.csv` | `dataset/cleaned_tv_shows.csv`, `models/encoder_scaler.pkl` |
-| **Regression Trainer** | `src/train_regression.py` | Fits 4 regression algorithms; computes MAE, RMSE, $R^2$. | `dataset/cleaned_tv_shows.csv` | `models/best_regressor.pkl`, `results/regression_metrics.csv` |
-| **Classifier Trainer** | `src/train_classification.py` | Bins ratings into 3 classes; fits 4 classification algorithms. | `dataset/cleaned_tv_shows.csv` | `models/best_classifier.pkl`, `results/classification_metrics.csv` |
-| **Web Application** | `app/app.py` | Interactive dashboard layout and real-time inference execution. | `.pkl` models, metrics CSVs | User Interface |
+| **Data Cleaner** | `src/preprocessing.py` | Imputation, scaling, feature filtering, rating binning. | `dataset/tv_shows_raw.csv` | `dataset/cleaned_tv_shows.csv` |
+| **Regression Trainer** | `src/train_regression.py` | Fits Linear Regression, Random Forest, Gradient Boosting; evaluates MAE, RMSE, $R^2$. | `dataset/cleaned_tv_shows.csv` | `models/regression_model.pkl` |
+| **Classifier Trainer** | `src/train_classification.py` | Bins ratings into Low/Moderate/High; fits Logistic Regression, Random Forest, Gradient Boosting. | `dataset/cleaned_tv_shows.csv` | `models/classification_model.pkl` |
+| **Web Application** | `app/main.py` | Interactive dashboard layout and real-time inference execution (Phase 4). | `models/*.pkl` | Streamlit User Interface |
 
 ---
 
@@ -118,8 +118,8 @@ TV-Program-Success-Prediction/
 │   └── utils.py                        # Plotting helpers and metrics calculators
 │
 ├── models/
-│   ├── best_regressor.pkl              # Saved best regressor (baseline: Random Forest)
-│   ├── best_classifier.pkl             # Saved best classifier (baseline: Random Forest)
+│   ├── regression_model.pkl              # Saved Linear Regression pipeline artifact
+│   ├── classification_model.pkl             # Saved best classifier (baseline: Random Forest)         # Saved Gradient Boosting pipeline artifact
 │   └── encoder_scaler.pkl              # Saved preprocessing transformers
 │
 ├── results/
@@ -127,7 +127,7 @@ TV-Program-Success-Prediction/
 │   └── classification_metrics.csv      # Benchmarking results for classifier models
 │
 ├── app/
-│   ├── app.py                          # Streamlit application entrypoint
+│   ├── main.py                          # Streamlit application entrypoint (Phase 4)
 │   ├── views/
 │   │   ├── predictor.py                # Single-Show Predictor View
 │   │   ├── benchmark.py                # Model Benchmark View
@@ -184,7 +184,7 @@ TV-Program-Success-Prediction/
 - Model files optimized using Joblib compression:
 
   ```python
-  joblib.dump(model, "models/best_regressor.pkl", compress=3)
+  joblib.dump(best_model, "models/regression_model.pkl")
   ```
 
 - Heavy compute processes (EDA plots, model loading) are cached via Streamlit decorators to guarantee response latency under **200 ms**.

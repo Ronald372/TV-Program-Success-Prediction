@@ -1,7 +1,7 @@
 # UI/UX & Dashboard Design System
 
 **Project:** TV Program Success Predictor
-**Document Version:** 1.0
+**Document Version:** 1.1 (Phases 1–3 Complete)
 
 ---
 
@@ -21,9 +21,9 @@ The interface uses a **dark cinematic theme** inspired by modern media platforms
 | **Primary Background** | `#0E1117` | App background |
 | **Card Surface** | `#1E222A` | Elevated panels, containers |
 | **Primary Accent** | `#E50914` | Streaming red, action buttons |
-| **Success – High** | `#00CC96` | Badge for ratings $\ge 8.0$ |
-| **Success – Moderate** | `#FFAA00` | Badge for ratings 7.0 – < 8.0 |
-| **Success – Low** | `#FF4B4B` | Badge for ratings < 7.0 |
+| **Success – High** | `#00CC96` | Tier badge for IMDb ratings $\ge 8.0$ |
+| **Success – Moderate** | `#FFAA00` | Tier badge for IMDb ratings $7.0 \le x < 8.0$ |
+| **Success – Low** | `#FF4B4B` | Tier badge for IMDb ratings $< 7.0$ |
 | **Text Primary** | `#FAFAFA` | Main body headers and titles |
 | **Text Muted** | `#A0AAB2` | Subtitles and metadata labels |
 
@@ -90,6 +90,7 @@ textColor = "#FAFAFA"
 ### 5.1 Predictor Tab Hierarchy
 
 ```text
+*Note:* In `app/main.py`, inputs are positioned inside `st.sidebar` while results render in dynamic columns (`col1` for Regression rating, `col2` for Classification tier badge).
 [ Input Form Column (Left 40%) ]   │   [ Prediction Results Column (Right 60%) ]
 - Title Text                       │   - Expected Rating Card (Big Number: e.g. 8.1)
 - Genre Dropdown                   │   - Success Category Badge (HIGH SUCCESS)
@@ -119,6 +120,6 @@ left, right = st.columns([2, 3])  # 40% / 60%
 
 | State | Behavior |
 | :--- | :--- |
-| **Initial State** | Form fields pre-populated with standard defaults: *Drama*, *45 mins*, *TV-14*, *Release Year 2026*. |
+| **Initial State** | Form fields pre-populated with standard defaults: *Drama*, *45 mins*, *TV-MA*, *Release Year 2024*. |
 | **Processing State** | Spinner displayed during execution: `st.spinner("Executing Prediction Pipeline...")` |
 | **Error State** | Inline warning for incomplete input: `st.warning("Please complete all required fields.")` |

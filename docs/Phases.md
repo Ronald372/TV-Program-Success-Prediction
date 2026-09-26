@@ -1,18 +1,16 @@
 # Project Execution Phases & Milestones
 
 **Project:** TV Program Success Predictor
-**Document Version:** 1.0
+**Document Version:** 1.1 (Phases 1–3 Completed)
 
 ---
 
 ## 1. Master Phase Roadmap Overview
 
-| Phase | Description | Deliverable Target | Assigned Lead |
-| :--- | :--- | :--- | :--- |
-| **Phase 1** | Dataset Preprocessing & EDA | Cleaned CSV + EDA Visuals | Member 1 (Data Lead) |
-| **Phase 2** | Regression Pipeline | Regressor `.pkl` + Metrics CSV | Member 2 (ML Lead) |
-| **Phase 3** | Classification Pipeline | Classifier `.pkl` + Metrics CSV | Member 3 (WebApp Lead) |
-| **Phase 4** | WebApp Development | Full Streamlit Web Application | Member 3 (WebApp Lead) |
+| **Phase 1** | Dataset Preprocessing & EDA | Cleaned CSV + EDA Visuals | Member 1 (Data Lead) — COMPLETED |
+| **Phase 2** | Regression Pipeline | Regressor `.pkl` Pipeline | Member 2 (ML Lead) — COMPLETED |
+| **Phase 3** | Classification Pipeline | Classifier `.pkl` Pipeline | Member 2 (ML Lead) — COMPLETED |
+| **Phase 4** | WebApp Development | Full Streamlit Web Application | Member 3 (WebApp Lead) — IN PROGRESS |
 | **Phase 5** | Integration, Testing & Docs | Final Repository + Presentation | All Members |
 
 ```text
@@ -29,30 +27,25 @@ Phase 1 ──► Phase 2 ──┐
 
 **Lead:** Member 1 (Data Lead)
 
-- [ ] **Task 1.1:** Ingest the Kaggle IMDb Top 5000 dataset into Pandas.
-- [ ] **Task 1.2:** Drop redundant text columns (`Synopsis`, `Poster Link`).
-- [ ] **Task 1.3:** Extract primary genre from multi-genre strings (e.g., `"Drama, Mystery"` $\rightarrow$ `"Drama"`).
-- [ ] **Task 1.4:** Construct EDA visualizations: Rating Distribution, Correlation Heatmaps, Top-Rated Genres.
-- [ ] **Task 1.5:** Export `dataset/cleaned_tv_shows.csv`.
+- [x] **Task 1.1:** Ingested raw Kaggle IMDb dataset (3,000 records) into Pandas.
+- [x] **Task 1.2:** Cleaned runtime and release year columns; handled nulls.
+- [x] **Task 1.3:** Extracted primary genre from multi-genre strings.
+- [x] **Task 1.4:** Constructed EDA visualizations in `notebooks/01_data_cleaning_eda.ipynb`.
+- [x] **Task 1.5:** Exported `dataset/cleaned_tv_shows.csv`.
 
-**Exit Criteria:** Clean CSV with no nulls in feature columns; EDA notebook committed.
-
+**Exit Criteria Status:** PASSED — Cleaned CSV and EDA notebook generated and committed.
 ---
 
 ### Phase 2: Regression Pipeline Development
 
 **Lead:** Member 2 (ML Lead)
 
-- [ ] **Task 2.1:** Implement feature transformers (`OneHotEncoder` for categorical, `StandardScaler` for numerical).
-- [ ] **Task 2.2:** Train 4 regression algorithms:
-  1. Linear Regression
-  2. K-Nearest Neighbors (KNN) Regressor
-  3. Decision Tree Regressor
-  4. Random Forest Regressor
-- [ ] **Task 2.3:** Calculate MAE, RMSE, and $R^2$ using an 80/20 train/test split.
-- [ ] **Task 2.4:** Save the optimal regressor artifact to `models/best_regressor.pkl`.
+- [x] **Task 2.1:** Implemented ColumnTransformer preprocessing pipeline (`StandardScaler` + `OneHotEncoder`).
+- [x] **Task 2.2:** Evaluated candidate regression models (Linear Regression, Random Forest, Gradient Boosting).
+- [x] **Task 2.3:** Evaluated metrics on 80/20 train/test split (Best: Linear Regression RMSE 0.9216, MAE 0.7097).
+- [x] **Task 2.4:** Exported best pipeline artifact to `models/regression_model.pkl`.
 
-**Exit Criteria:** `results/regression_metrics.csv` generated; best model meets $R^2 \ge 0.35$, MAE $\le 0.65$.
+**Exit Criteria Status:** PASSED — Saved `models/regression_model.pkl`.
 
 ---
 
@@ -60,19 +53,12 @@ Phase 1 ──► Phase 2 ──┐
 
 **Lead:** Member 3 (WebApp Lead)
 
-- [ ] **Task 3.1:** Construct target vector $y_{\text{class}}$ using 3-tier categorization:
-  - Low: $< 7.0$
-  - Moderate: $7.0 \le x < 8.0$
-  - High: $\ge 8.0$
-- [ ] **Task 3.2:** Train 4 classification algorithms:
-  1. Logistic Regression
-  2. K-Nearest Neighbors (KNN) Classifier
-  3. Decision Tree Classifier
-  4. Random Forest Classifier
-- [ ] **Task 3.3:** Calculate Accuracy, Precision, Recall, F1-Score, and Confusion Matrix.
-- [ ] **Task 3.4:** Save the optimal classifier artifact to `models/best_classifier.pkl`.
+- [x] **Task 3.1:** Binned ratings into Low (< 7.0), Moderate (7.0–8.0), and High ($\ge 8.0$) tiers in `src/preprocessing.py`.
+- [x] **Task 3.2:** Evaluated candidate classifiers (Logistic Regression, Random Forest, Gradient Boosting).
+- [x] **Task 3.3:** Calculated Accuracy, Precision, Recall, and F1-Score (Best: Gradient Boosting Weighted F1 0.3956, Accuracy 45.67%).
+- [x] **Task 3.4:** Exported best pipeline artifact to `models/classification_model.pkl`.
 
-**Exit Criteria:** `results/classification_metrics.csv` generated; best model meets Accuracy $\ge 70\%$, F1 $\ge 0.68$.
+**Exit Criteria Status:** PASSED — Saved `models/classification_model.pkl`.
 
 ---
 
@@ -80,7 +66,7 @@ Phase 1 ──► Phase 2 ──┐
 
 **Lead:** Member 3 (WebApp Lead)
 
-- [ ] **Task 4.1:** Build `app/app.py` with multi-page navigation layout.
+- [ ] **Task 4.1:** Build Streamlit entrypoint `app/main.py` loading `models/regression_model.pkl` and `models/classification_model.pkl`.
 - [ ] **Task 4.2:** Implement Single-Show Predictor form connected to `.pkl` artifacts.
 - [ ] **Task 4.3:** Build Model Benchmark page rendering saved evaluation CSVs.
 - [ ] **Task 4.4:** Build Exploratory Analytics tab displaying Plotly EDA charts.

@@ -1,7 +1,7 @@
 # Project Rules & Engineering Standards
 
 **Project:** TV Program Success Predictor
-**Document Version:** 1.0
+**Document Version:** 1.1 (Phases 1–3 Complete)
 
 ---
 
@@ -42,8 +42,8 @@ def predict_rating(features: dict) -> float:
 
 | Status | Features |
 | :--- | :--- |
-| ❌ **Forbidden in $X$** | `No_of_Votes`, `Popularity_Rank`, `User_Reviews`, `IMDb_Rating` |
-| ✅ **Allowed in $X$** | `Release_Year`, `Runtime_Mins`, `Certificate`, `Primary_Genre`, `Key_Cast` |
+| ❌ **Forbidden in $X$** | `no_of_votes` / `Votes`, `Popularity_Rank`, `User_Reviews`, `imdb_rating` |
+| ✅ **Allowed in $X$** | `release_year`, `runtime_mins`, `certificate`, `primary_genre`, `key_cast` |
 
 ---
 
@@ -82,8 +82,8 @@ def bin_rating(rating: float) -> str:
 ```python
 @st.cache_resource
 def load_models():
-    regressor = joblib.load("models/best_regressor.pkl")
-    classifier = joblib.load("models/best_classifier.pkl")
+    regressor = joblib.load("models/regression_model.pkl")
+    classifier = joblib.load("models/classification_model.pkl")
     return regressor, classifier
 ```
 

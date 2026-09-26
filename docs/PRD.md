@@ -1,8 +1,8 @@
 # Product Requirements Document (PRD)
 
 **Project:** TV Program Success Predictor
-**Document Version:** 1.0
-**Status:** Approved for Development
+**Document Version:** 1.1
+**Status:** Phases 1–3 Complete (Phase 4 Active)
 
 ---
 
@@ -64,9 +64,9 @@ Television networks and streaming services commit massive capital to content dev
 
 | Req. ID | Module | Priority | Description |
 | :--- | :--- | :--- | :--- |
-| **FR-01** | Data Pipeline | **MUST-HAVE (M)** | Clean raw IMDb data, handle missing values, and encode categorical variables without target leakage. |
-| **FR-02** | Regression ML | **MUST-HAVE (M)** | Implement and compare Linear Regression, KNN Regressor, Decision Tree Regressor, and Random Forest Regressor. |
-| **FR-03** | Classification ML | **MUST-HAVE (M)** | Categorize ratings into Low (< 7.0), Moderate (7.0 – < 8.0), and High ($\ge 8.0$) tiers and evaluate 4 classification models. |
+| **FR-01** | Data Pipeline | **COMPLETED** | Cleaned raw IMDb dataset (3,000 rows), extracted primary genres/years, and built zero-leakage `src/preprocessing.py`. |
+| **FR-02** | Regression ML | **COMPLETED** | Trained and evaluated Linear Regression, Random Forest, and Gradient Boosting in `src/train_regression.py`. Best: Linear Regression ($\text{RMSE} = 0.9216$). |
+| **FR-03** | Classification ML | **COMPLETED** | Categorized into Low, Moderate, High tiers and evaluated Logistic Regression, Random Forest, and Gradient Boosting in `src/train_classification.py`. Best: Gradient Boosting ($\text{F1} = 0.3956$). |
 | **FR-04** | Inference Engine | **MUST-HAVE (M)** | Load pre-trained `.pkl` artifacts and execute dual-target inference in under 200 ms. |
 | **FR-05** | Predictor UI | **MUST-HAVE (M)** | Interactive form with sliders, dropdowns, and text fields yielding real-time score badges and risk indicators. |
 | **FR-06** | Benchmark UI | **MUST-HAVE (M)** | Dynamic performance tables ($R^2$, MAE, RMSE, Accuracy, F1) with toggleable plots and confusion matrices. |
@@ -112,7 +112,7 @@ Television networks and streaming services commit massive capital to content dev
 
 | Parameter | Target |
 | :--- | :--- |
-| **Dataset Size** | $5{,}000+$ unique TV show records |
+| **Dataset Size** | 3,000 unique TV show records (`tv_shows_raw.csv`) |
 | **Cross-Validation** | 5-Fold Cross Validation across all candidate models during training |
 | **Split Ratio** | $80\%$ Training Set / $20\%$ Holdout Test Set |
 
@@ -175,13 +175,14 @@ The application interface is partitioned into three main views.
 
 ## 11. Success Criteria & Evaluation Rubric
 
-| Target | Metric | Threshold |
-| :--- | :--- | :--- |
-| **Regression** | $R^2$ (best model, pre-release metadata) | $\ge 0.35$ |
-| **Regression** | MAE (best model, pre-release metadata) | $\le 0.65$ |
-| **Classification** | Accuracy (best classifier) | $\ge 70\%$ |
-| **Classification** | F1-Score (best classifier) | $\ge 0.68$ |
-| **System** | Web App stability | Executes smoothly without UI errors or inference failures |
+| Target | Metric | Initial Target | Phase 2–3 Baseline Empirical Result |
+| :--- | :--- | :--- | :--- |
+| **Regression** | RMSE (Linear Regression) | — | **0.9216** |
+| **Regression** | MAE (Linear Regression) | $\le 0.65$ | **0.7097** |
+| **Regression** | $R^2$ (Linear Regression) | $\ge 0.35$ | **0.0804** |
+| **Classification** | Accuracy (Gradient Boosting) | $\ge 70\%$ | **45.67%** |
+| **Classification** | F1-Score (Gradient Boosting) | $\ge 0.68$ | **0.3956** |
+| **System** | Web App stability | Executes smoothly | *In Progress (Phase 4)* |
 
 ---
 
